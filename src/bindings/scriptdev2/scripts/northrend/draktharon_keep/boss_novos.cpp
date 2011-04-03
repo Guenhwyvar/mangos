@@ -118,11 +118,11 @@ struct MANGOS_DLL_DECL boss_novosAI : public ScriptedAI
         m_uiPhase = PHASE_SUMMONING;
         m_uiCheckoutAdds_Timer = 0;
         m_uiSummonRandomAdd_Timer = 5000;
-        m_uiSummonCrystalChanneler_Timer = 15000/3;
-        m_uiFrostbolt_Timer = 5000;
+        m_uiSummonCrystalChanneler_Timer = 25000;
+        m_uiFrostbolt_Timer = 0;
         m_uiMisery_Timer = 10000;
-        m_uiArcane_Timer = 25000;
-        m_uiBlizzard_Timer = 30000;
+        m_uiArcane_Timer = 5000;
+        m_uiBlizzard_Timer = 20000;
         m_uiSummonTrollCorpse_Timer = 30000;
         m_uiCrystalsDeactivated = 0;
     }
@@ -267,7 +267,7 @@ struct MANGOS_DLL_DECL boss_novosAI : public ScriptedAI
 
                 m_bHandlerFromEntrance = !m_bHandlerFromEntrance;
                 DoScriptText(SAY_ADDS, m_creature);
-                m_uiSummonCrystalChanneler_Timer = 25000/3;
+                m_uiSummonCrystalChanneler_Timer = 25000;
             }
             else
                 m_uiSummonCrystalChanneler_Timer -= uiDiff;
@@ -278,7 +278,7 @@ struct MANGOS_DLL_DECL boss_novosAI : public ScriptedAI
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                     DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_FROSTBOLT : SPELL_FROSTBOLT_H);
-                m_uiFrostbolt_Timer = urand(5000, 15000);
+                m_uiFrostbolt_Timer = 2000;
             }
             else
                 m_uiFrostbolt_Timer -= uiDiff;
@@ -286,7 +286,7 @@ struct MANGOS_DLL_DECL boss_novosAI : public ScriptedAI
             if (m_uiMisery_Timer <= uiDiff)
             {
                 DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_MISERY : SPELL_MISERY_H);
-                m_uiMisery_Timer = urand(15000, 35000);
+                m_uiMisery_Timer = urand(15000, 25000);
             }
             else
                 m_uiMisery_Timer -= uiDiff;
@@ -303,7 +303,7 @@ struct MANGOS_DLL_DECL boss_novosAI : public ScriptedAI
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                     DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_BLIZZARD : SPELL_BLIZZARD_H);
-                m_uiBlizzard_Timer = urand(25000, 35000);
+                m_uiBlizzard_Timer = urand(20000, 25000);
             }
             else
                 m_uiBlizzard_Timer -= uiDiff;
@@ -319,7 +319,6 @@ struct MANGOS_DLL_DECL boss_novosAI : public ScriptedAI
                 else
                     m_uiSummonTrollCorpse_Timer -= uiDiff;
             }
-            DoMeleeAttackIfReady();
         }
     }
 };
